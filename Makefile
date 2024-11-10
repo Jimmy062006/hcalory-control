@@ -1,4 +1,4 @@
-.PHONY: lint fix format export-dependencies
+.PHONY: lint fix format export-dependencies clean
 
 default: format
 
@@ -16,3 +16,6 @@ format:
 export-dependencies:
 	uv export --no-hashes -o requirements.txt
 	uv export --only-dev --no-hashes -o requirements-dev.txt
+
+clean:
+	rm -r ./dist
