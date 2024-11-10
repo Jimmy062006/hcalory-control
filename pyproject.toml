@@ -1,6 +1,6 @@
 [project]
 name = "hcalory-control"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
   "bleak==0.22.3",
   "bleak-retry-connector==3.6.0",
@@ -10,7 +10,6 @@ description = "A tool for controlling Hcalory diesel heaters over Bluetooth."
 authors = [{ name = "Evan Foster", email = "evan@fos.tech" }]
 readme = "README.md"
 requires-python = ">=3.11"
-license = { file = "LICENSE" }
 keywords = [
   "hcalory",
   "bluetooth",
