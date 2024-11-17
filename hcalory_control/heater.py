@@ -98,6 +98,7 @@ class HCaloryHeater:
         self._device: bleak.BLEDevice | None = None
         self._write_characteristic: bleak.BleakGATTCharacteristic | None = None
         self._read_characteristic: bleak.BleakGATTCharacteristic | None = None
+        self._intentional_disconnect: bool = False
 
     @property
     def read_characteristic(self) -> bleak.BleakGATTCharacteristic:
@@ -121,7 +122,8 @@ class HCaloryHeater:
 
     def handle_disconnect(self, _: bleak.BleakClient) -> None:
         assert self._device is not None
-        asyncio.get_event_loop().create_task(self.connect(self._device))
+        if not self._intentional_disconnect:
+            asyncio.get_event_loop().create_task(self.connect(self._device))
 
     async def data_pump_handler(
         self, _: bleak.BleakGATTCharacteristic, data: bytearray
@@ -134,11 +136,17 @@ class HCaloryHeater:
         assert self.heater_response is not None
         return self.heater_response
 
+    async def disconnect(self) -> None:
+        self._intentional_disconnect = True
+        assert self.bleak_client is not None
+        await self.bleak_client.disconnect()
+
     async def send_command(self, command: Command):
         assert self.bleak_client is not None
         await self.bleak_client.write_gatt_char(self.write_characteristic, command)
 
     async def connect(self, device: bleak.BLEDevice) -> None:
+        self._intentional_disconnect = False
         self._device = device
         self.bleak_client = await bleak_retry_connector.establish_connection(
             bleak.BleakClient,
