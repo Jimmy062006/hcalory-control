@@ -19,3 +19,6 @@ export-dependencies:
 
 clean:
 	rm -r ./dist
+
+publish:
+	uv publish --username=__token__
