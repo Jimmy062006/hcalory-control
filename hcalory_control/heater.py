@@ -248,6 +248,12 @@ class HCaloryHeater:
             )
 
     @property
+    def is_connected(self) -> bool:
+        if self.bleak_client is None:
+            return False
+        return self.bleak_client.is_connected
+
+    @property
     def read_characteristic(self) -> bleak.BleakGATTCharacteristic:
         if self._read_characteristic is None:
             assert self.bleak_client is not None

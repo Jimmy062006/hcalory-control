@@ -1,6 +1,6 @@
 [project]
 name = "hcalory-control"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
   "bleak==0.22.3",
   "bleak-retry-connector==3.6.0",
