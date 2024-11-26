@@ -1,6 +1,6 @@
 ## hcalory-control
 
-A little tool to control BLE-capable Hcalory heaters. This has only been tested on the Hcalory W1 model.
+An unofficial little tool to control BLE-capable Hcalory heaters. This has only been tested on the Hcalory W1 model.
 
 ### CLI Usage
 
