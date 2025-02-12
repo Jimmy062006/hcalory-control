@@ -14,8 +14,13 @@ format:
 	ruff format
 
 export-dependencies:
-	uv export --no-hashes -o requirements.txt
-	uv export --only-dev --no-hashes -o requirements-dev.txt
+	uv export --refresh --no-hashes -o requirements.txt
+	uv export --refresh --only-dev --no-hashes -o requirements-dev.txt
+
+upgrade-dependencies:
+	# probably a dumb way to do this
+	uv export -U --refresh --no-hashes -o requirements.txt
+	uv export -U --refresh --only-dev --no-hashes -o requirements-dev.txt
 
 clean:
 	rm -r ./dist
