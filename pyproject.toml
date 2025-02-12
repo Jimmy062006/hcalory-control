@@ -1,10 +1,10 @@
 [project]
 name = "hcalory-control"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [
-  "bleak==0.22.3",
-  "bleak-retry-connector==3.6.0",
-  "py-datastruct==2.0.0"
+  "bleak<1.0.0",
+  "bleak-retry-connector<4.0",
+  "py-datastruct<3.0.0",
 ]
 description = "A tool for controlling Hcalory diesel heaters over Bluetooth."
 authors = [{ name = "Evan Foster", email = "evan@fos.tech" }]
