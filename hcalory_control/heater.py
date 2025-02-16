@@ -254,20 +254,16 @@ class HCaloryHeater:
             return False
         return self.bleak_client.is_connected
 
-@property
-def read_characteristic(self) -> BleakGATTCharacteristic:
-    if self._read_characteristic is None:
-        if not self.bleak_client:
-            raise RuntimeError("BLE client is not initialized.")
-
-        self._read_characteristic = self.bleak_client.services.get_characteristic(self.read_characteristic_id)
-        
+    @property
+    def read_characteristic(self) -> bleak.BleakGATTCharacteristic:
         if self._read_characteristic is None:
-            raise ValueError(f"Characteristic {self.read_characteristic_id} not found.")
-
-        print(f"Read characteristic: {self._read_characteristic}")
-
-    return self._read_characteristic
+            assert self.bleak_client is not None
+            read_characteristic = self.bleak_client.services.get_characteristic(
+                self.read_characteristic_id
+            )
+            assert read_characteristic is not None
+            self._read_characteristic = read_characteristic
+        return self._read_characteristic
 
     @property
     def write_characteristic(self) -> bleak.BleakGATTCharacteristic:
