@@ -11,6 +11,7 @@ import bleak
 import bleak_retry_connector
 import datastruct
 from bleak import BleakError
+from bleak import BleakGATTCharacteristic
 
 logger = logging.getLogger(__name__)
 
@@ -253,17 +254,20 @@ class HCaloryHeater:
             return False
         return self.bleak_client.is_connected
 
-    @property
-    def read_characteristic(self) -> bleak.BleakGATTCharacteristic:
+@property
+def read_characteristic(self) -> BleakGATTCharacteristic:
+    if self._read_characteristic is None:
+        if not self.bleak_client:
+            raise RuntimeError("BLE client is not initialized.")
+
+        self._read_characteristic = self.bleak_client.services.get_characteristic(self.read_characteristic_id)
+        
         if self._read_characteristic is None:
-            assert self.bleak_client is not None
-            read_characteristic = self.bleak_client.services.get_characteristic(
-                self.read_characteristic_id
-            )
-            print(f"read_characteristic: {read_characteristic}")
-            assert read_characteristic is not None
-            self._read_characteristic = read_characteristic
-        return self._read_characteristic
+            raise ValueError(f"Characteristic {self.read_characteristic_id} not found.")
+
+        print(f"Read characteristic: {self._read_characteristic}")
+
+    return self._read_characteristic
 
     @property
     def write_characteristic(self) -> bleak.BleakGATTCharacteristic:
