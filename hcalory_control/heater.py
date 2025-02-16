@@ -260,7 +260,8 @@ class HCaloryHeater:
             read_characteristic = self.bleak_client.services.get_characteristic(
                 self.read_characteristic_id
             )
-            assert read_characteristic is not None
+            print(f"read_characteristic: {self.read_characteristic}")
+            assert self.read_characteristic is not None
             self._read_characteristic = read_characteristic
         return self._read_characteristic
 
